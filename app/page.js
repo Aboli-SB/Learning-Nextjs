@@ -47,7 +47,7 @@ export default function Home() {
       </ul>
 
       <h1>Home Page</h1>
-      <p>Welcome to the blog homepage!</p>
+      <p>Welcome to the blog homepage!!!</p>
       <button onClick={() => router.push("/blog")}>Visit Blog</button>
    
    
