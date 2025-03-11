@@ -1,95 +1,85 @@
+"use client";
 import Image from "next/image";
 import styles from "./page.module.css";
+import Demo from "../components/ui/demo";
+import React, { useEffect } from "react";
+import { CountProvider, useCount } from "../components/ui/context";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
-export default function Home() {
+function HomeComponent() {
+  // Use context instead of useState directly
+  const { count, setCount } = useCount();
+
+  // Effect runs on every render
+  useEffect(() => {
+    console.log("Effect ran!");
+  });
+
   return (
     <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>app/page.js</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      <h2>Count: {count}</h2>
+      <button onClick={() => setCount(count + 1)}>Increment</button>
+      <Demo />
     </div>
   );
 }
+
+export default function Home() {
+  const posts = [
+    { id: 1, title: "React Basics", slug: "react-basics" },
+    { id: 2, title: "Next.js Tips", slug: "nextjs-tips" },
+    { id: 3, title: "Understanding Slugs", slug: "understanding-slugs" },
+  ];
+  const router = useRouter();
+
+  return (
+    <div>
+      <h1>Blog Posts</h1>
+      <ul>
+        {posts.map((post) => (
+          <li key={post.id}>
+            <Link href={`/posts/${post.slug}`}>
+              {post.title}
+            </Link>
+          </li>
+        ))}
+      </ul>
+
+      <h1>Home Page</h1>
+      <p>Welcome to the blog homepage!</p>
+      <button onClick={() => router.push("/blog")}>Visit Blog</button>
+   
+   
+    <CountProvider>
+      <HomeComponent />
+    </CountProvider>  </div>
+  );
+}
+
+
+// "use client";
+// import Image from "next/image";
+// import styles from "./page.module.css";
+// import Demo from "../components/ui/demo";
+// import React, { useState, useEffect } from 'react';
+
+// export default function Home() {
+
+//   const [count, setCount] = useState(0);
+
+//   useEffect(() => {
+//     console.log("Effect ran!");
+//   }); // No dependency array
+
+
+
+//   return (
+//     <div className={styles.page}>
+//       <h2>Count: {count}</h2>
+//       <button onClick={() => setCount(count + 1)}>Increment</button>
+//       <Demo />
+//     </div>
+//   );
+// }
+
